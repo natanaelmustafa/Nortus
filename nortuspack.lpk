@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="NortusPack"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Version Major="1"/>
+    <Files>
+      <Item>
+        <Filename Value="uNortusTabs.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="uNortusTabs"/>
+      </Item>
+      <Item>
+        <Filename Value="unortusaliquotaedit.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="uNortusAliquotaEdit"/>
+      </Item>
+      <Item>
+        <Filename Value="nortussearchlist.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="NortusSearchList"/>
+      </Item>
+      <Item>
+        <Filename Value="ulkcombobox.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="uLKComboBox"/>
+      </Item>
+      <Item>
+        <Filename Value="flexiswitch.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="FlexiSwitch"/>
+      </Item>
+      <Item>
+        <Filename Value="flexiswitch_setter.inc"/>
+        <Type Value="Include"/>
+      </Item>
+      <Item>
+        <Filename Value="imageselector.inc"/>
+        <Type Value="Include"/>
+      </Item>
+      <Item>
+        <Filename Value="outsourced.pas"/>
+        <UnitName Value="outsourced"/>
+      </Item>
+    </Files>
+    <RequiredPkgs>
+      <Item>
+        <PackageName Value="rxnew"/>
+      </Item>
+      <Item>
+        <PackageName Value="LCLBase"/>
+      </Item>
+      <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

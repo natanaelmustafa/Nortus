@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <General>
+      <Flags>
+        <LRSInOutputDirectory Value="False"/>
+        <CompatibilityMode Value="True"/>
+      </Flags>
+      <MainUnit Value="-1"/>
+    </General>
+    <BuildModes Count="1">
+      <Item1 Name="default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
+    </RunParams>
+    <Units Count="1">
+      <Unit0>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <UnitName Value="uNortusEditAliquota"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="7"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit0>
+    </Units>
+    <JumpHistory Count="4" HistoryIndex="3">
+      <Position1>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="7" Column="50"/>
+      </Position1>
+      <Position2>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="6" Column="13"/>
+      </Position2>
+      <Position3>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Column="7"/>
+      </Position3>
+      <Position4>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="44" Column="16" TopLine="36"/>
+      </Position4>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <Parsing>
+      <SyntaxOptions>
+        <UseAnsiStrings Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+  </CompilerOptions>
+</CONFIG>

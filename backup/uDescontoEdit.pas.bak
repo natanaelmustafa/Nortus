@@ -1,0 +1,287 @@
+unit uDescontoEdit;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, Controls, StdCtrls, ExtCtrls, Buttons, Graphics, LCLType;
+
+type
+  TTipoDesconto = (tdPercentual, tdValor);
+
+  { TDescontoEdit }
+
+  TDescontoEdit = class(TPanel)
+  private
+    FEdit: TEdit;
+    FBtn: TSpeedButton;
+    FTipo: TTipoDesconto;
+    FOnChange: TNotifyEvent;
+    FInternalUpdating: Boolean;
+    procedure BtnClick(Sender: TObject);
+    procedure EditChange(Sender: TObject);
+    procedure EditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure EditKeyPress(Sender: TObject; var Key: Char);
+    procedure EditExit(Sender: TObject);
+    procedure SetTipo(const AValue: TTipoDesconto);
+    function GetValue: Currency;
+    procedure SetValue(AValue: Currency);
+    function TryParseValue(const S: string; out V: Currency): Boolean;
+  public
+    constructor Create(AOwner: TComponent); override;
+    property Tipo: TTipoDesconto read FTipo write SetTipo;
+    property Value: Currency read GetValue write SetValue;
+    property OnChange: TNotifyEvent read FOnChange write FOnChange;
+    procedure Clear;
+  end;
+
+procedure Register;
+
+implementation
+
+procedure Register;
+begin
+  RegisterComponents('Nortus', [TNortusTabs]);
+end;
+
+{ TDescontoEdit }
+
+constructor TDescontoEdit.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  FInternalUpdating := False;
+
+  // Painel
+  Self.Height := 30;
+  Self.Width := 120;
+  Self.Caption := '';
+  Self.Color := clBtnFace;
+
+  // Edit
+  FEdit := TEdit.Create(Self);
+  FEdit.Parent := Self;
+  FEdit.Left := 0;
+  FEdit.Top := 0;
+  FEdit.Width := Self.Width - 30;
+  FEdit.Height := Self.Height;
+  FEdit.OnChange := @EditChange;
+  FEdit.OnKeyDown := @EditKeyDown;
+  FEdit.OnKeyPress := @EditKeyPress;
+  FEdit.OnExit := @EditExit;
+
+  // Ajusta cores do edit
+  FEdit.Color := clWindow;
+  FEdit.Font.Color := clBlack;
+
+  // Botão % / R$
+  FBtn := TSpeedButton.Create(Self);
+  FBtn.Parent := Self;
+  FBtn.Left := FEdit.Width;
+  FBtn.Top := 0;
+  FBtn.Width := 30;
+  FBtn.Height := Self.Height;
+  FBtn.Caption := '%';
+  FBtn.OnClick := @BtnClick;
+  FBtn.Font.Color := clBlack;
+
+  FTipo := tdPercentual;
+end;
+
+// Tenta parsear string para Currency (tenta várias formas)
+function TDescontoEdit.TryParseValue(const S: string; out V: Currency): Boolean;
+var
+  tmp: string;
+  d: Extended;
+begin
+  Result := False;
+  tmp := Trim(S);
+  if tmp = '' then
+  begin
+    V := 0;
+    Result := True;
+    Exit;
+  end;
+  // Primeiro tenta com as regras da localidade
+  if TryStrToCurr(tmp, V) then
+    Exit(True);
+  // Tenta trocar vírgula por ponto e parse float
+  tmp := StringReplace(tmp, ',', '.', [rfReplaceAll]);
+  if TryStrToFloat(tmp, d) then
+  begin
+    V := d;
+    Exit(True);
+  end;
+  Result := False;
+end;
+
+procedure TDescontoEdit.EditExit(Sender: TObject);
+var
+  v: Currency;
+begin
+  // Ao sair do controle, formatamos definitivamente
+  if TryParseValue(FEdit.Text, v) then
+  begin
+    if FTipo = tdPercentual then
+    begin
+      if v < 0 then v := 0;
+      if v > 100 then v := 100;
+      FInternalUpdating := True;
+      try
+        FEdit.Text := FloatToStr(v);
+      finally
+        FInternalUpdating := False;
+      end;
+    end
+    else
+    begin
+      if v < 0 then v := 0; // não permitir negativo no R$
+      FInternalUpdating := True;
+      try
+        FEdit.Text := CurrToStrF(v, ffFixed, 4);
+      finally
+        FInternalUpdating := False;
+      end;
+    end;
+    if Assigned(FOnChange) then FOnChange(Self);
+  end;
+end;
+
+procedure TDescontoEdit.EditKeyPress(Sender: TObject; var Key: Char);
+var
+  decSep: Char;
+begin
+  // Bloqueia caracteres indesejados enquanto digita.
+  // Permite: dígitos, backspace, separador decimal (',' ou '.'), sinais de controle (CR, LF), e seleção normal.
+  decSep := DecimalSeparator;
+  // Sempre bloquear '-' (não queremos negativos)
+  if Key = '-' then
+  begin
+    Key := #0;
+    Exit;
+  end;
+
+  if (Key >= '0') and (Key <= '9') then Exit;
+  if Key in [#8, #13, #27] then Exit; // backspace, enter, esc
+  if (Key = ',') or (Key = '.') then
+  begin
+    // permite decimal (mas apenas 1)
+    if Pos(',', FEdit.Text) > 0 then
+      if Key = ',' then Key := #0;
+    if Pos('.', FEdit.Text) > 0 then
+      if Key = '.' then Key := #0;
+    Exit;
+  end;
+
+  // Tudo o resto bloqueia
+  Key := #0;
+end;
+
+procedure TDescontoEdit.EditChange(Sender: TObject);
+begin
+  // não reformatar aqui — permite que seleção seja substituída normalmente
+  if FInternalUpdating then Exit;
+  if Assigned(FOnChange) then FOnChange(Self);
+end;
+
+procedure TDescontoEdit.EditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+var
+  v: Currency;
+  step: Double;
+begin
+  if not TryParseValue(FEdit.Text, v) then
+    v := 0;
+
+  if FTipo = tdPercentual then
+    step := 1   // % sobe/desce de 1 em 1
+  else
+    step := 0.1; // R$ sobe/desce de 0.1 em 0.1
+
+  case Key of
+    VK_UP:
+      begin
+        v := v + step;
+        if (FTipo = tdPercentual) and (v > 100) then v := 100;
+        if v < 0 then v := 0;
+        SetValue(v);
+        Key := 0;
+        if Assigned(FOnChange) then FOnChange(Self);
+      end;
+    VK_DOWN:
+      begin
+        v := v - step;
+        if v < 0 then v := 0;
+        SetValue(v);
+        Key := 0;
+        if Assigned(FOnChange) then FOnChange(Self);
+      end;
+  end;
+end;
+
+procedure TDescontoEdit.BtnClick(Sender: TObject);
+var
+  v: Currency;
+begin
+  // pega o valor atual bruto e alterna tipo
+  if not TryParseValue(FEdit.Text, v) then v := 0;
+
+  if FTipo = tdPercentual then
+    SetTipo(tdValor)
+  else
+    SetTipo(tdPercentual);
+
+  // reformatar mantendo o valor (clamp dentro de SetValue)
+  SetValue(v);
+
+  if Assigned(FOnChange) then FOnChange(Self);
+end;
+
+procedure TDescontoEdit.SetTipo(const AValue: TTipoDesconto);
+begin
+  FTipo := AValue;
+  if FTipo = tdPercentual then
+    FBtn.Caption := '%'
+  else
+    FBtn.Caption := 'R$';
+end;
+
+function TDescontoEdit.GetValue: Currency;
+begin
+  if not TryParseValue(FEdit.Text, Result) then
+    Result := 0;
+end;
+
+procedure TDescontoEdit.SetValue(AValue: Currency);
+begin
+  FInternalUpdating := True;
+  try
+    if FTipo = tdPercentual then
+    begin
+      if AValue < 0 then AValue := 0;
+      if AValue > 100 then AValue := 100;
+      FEdit.Text := FloatToStr(AValue);
+    end
+    else
+    begin
+      if AValue < 0 then AValue := 0; // impede negativo para R$
+      FEdit.Text := CurrToStrF(AValue, ffFixed, 4);
+    end;
+  finally
+    FInternalUpdating := False;
+  end;
+end;
+
+procedure TDescontoEdit.Clear;
+begin
+  FInternalUpdating := True;
+  try
+    FEdit.Text := '';
+  finally
+    FInternalUpdating := False;
+  end;
+  if Assigned(FOnChange) then
+    FOnChange(Self);
+end;
+
+end.

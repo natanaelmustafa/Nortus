@@ -1,0 +1,226 @@
+unit uNortusEditAliquota;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, Controls, StdCtrls, Graphics, LMessages, Forms, LCLType,
+  LCLIntf, RxCurrEdit;
+
+type
+  TMarcadorTipo = (mtReais, mtPorcentagem);
+
+  TNortusEditAliquota = class(TCurrencyEdit)
+  private
+    FMarcadorTipo: TMarcadorTipo;
+    FPermiteAlternarMarcador: Boolean;
+    FMarcadorRect: TRect;
+
+    procedure SetMarcadorTipo(const Value: TMarcadorTipo);
+    function GetMarcadorTexto: string;
+    procedure CalcularMarcadorRect;
+    function PontoEstaNaMarcador(X, Y: Integer): Boolean;
+    procedure AlternarMarcador;
+
+  protected
+    procedure WMPaint(var Message: TLMPaint); message LM_PAINT;
+    procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
+    procedure KeyDown(var Key: Word; Shift: TShiftState); override;
+    procedure Resize; override;
+
+  public
+    constructor Create(AOwner: TComponent); override;
+
+  published
+    property MarcadorTipo: TMarcadorTipo read FMarcadorTipo write SetMarcadorTipo default mtReais;
+    property PermiteAlternarMarcador: Boolean read FPermiteAlternarMarcador write FPermiteAlternarMarcador default True;
+  end;
+
+procedure Register;
+
+implementation
+
+{ TNortusEditAliquota }
+
+constructor TNortusEditAliquota.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  // Configurações iniciais
+  FMarcadorTipo := mtReais;
+  FPermiteAlternarMarcador := True;
+
+  // Configurar TCurrencyEdit base
+  DecimalPlaces := 2;
+  MinValue := 0;
+  MaxValue := 999999999;
+  Value := 0;
+
+  // Configurações visuais
+  Width := 150;
+  Height := 25;
+
+  // Inicializar retângulo do marcador
+  FMarcadorRect := Rect(0, 0, 0, 0);
+end;
+
+procedure TNortusEditAliquota.SetMarcadorTipo(const Value: TMarcadorTipo);
+begin
+  if FMarcadorTipo <> Value then
+  begin
+    FMarcadorTipo := Value;
+    CalcularMarcadorRect;
+    Invalidate;
+  end;
+end;
+
+function TNortusEditAliquota.GetMarcadorTexto: string;
+begin
+  case FMarcadorTipo of
+    mtReais: Result := 'R$';
+    mtPorcentagem: Result := '%';
+  else
+    Result := 'R$';
+  end;
+end;
+
+procedure TNortusEditAliquota.CalcularMarcadorRect;
+var
+  MarcadorTexto: string;
+  TextWidth, TextHeight: Integer;
+  TempCanvas: TCanvas;
+begin
+  if not HandleAllocated then Exit;
+
+  // Criar canvas temporário para medir texto
+  TempCanvas := TCanvas.Create;
+  try
+    TempCanvas.Handle := GetDC(Handle);
+    TempCanvas.Font.Assign(Font);
+
+    MarcadorTexto := GetMarcadorTexto;
+    TextWidth := TempCanvas.TextWidth(MarcadorTexto);
+    TextHeight := TempCanvas.TextHeight(MarcadorTexto);
+
+    FMarcadorRect.Left := Width - TextWidth - 12;
+    FMarcadorRect.Top := (Height - TextHeight) div 2;
+    FMarcadorRect.Right := Width - 4;
+    FMarcadorRect.Bottom := FMarcadorRect.Top + TextHeight;
+
+    ReleaseDC(Handle, TempCanvas.Handle);
+  finally
+    TempCanvas.Free;
+  end;
+end;
+
+function TNortusEditAliquota.PontoEstaNaMarcador(X, Y: Integer): Boolean;
+begin
+  Result := (X >= FMarcadorRect.Left) and (X <= FMarcadorRect.Right) and
+            (Y >= FMarcadorRect.Top) and (Y <= FMarcadorRect.Bottom);
+end;
+
+procedure TNortusEditAliquota.AlternarMarcador;
+begin
+  if FPermiteAlternarMarcador then
+  begin
+    if FMarcadorTipo = mtReais then
+      SetMarcadorTipo(mtPorcentagem)
+    else
+      SetMarcadorTipo(mtReais);
+  end;
+end;
+
+procedure TNortusEditAliquota.WMPaint(var Message: TLMPaint);
+var
+  MarcadorTexto: string;
+  R: TRect;
+  DC: HDC;
+  TempCanvas: TCanvas;
+begin
+  // Chamar o paint padrão do TCurrencyEdit primeiro
+  inherited;
+
+  // Desenhar o marcador por cima
+  if HandleAllocated then
+  begin
+    CalcularMarcadorRect;
+
+    DC := GetDC(Handle);
+    try
+      TempCanvas := TCanvas.Create;
+      try
+        TempCanvas.Handle := DC;
+
+        MarcadorTexto := GetMarcadorTexto;
+
+        // Desenhar fundo do marcador
+        TempCanvas.Brush.Color := clBtnFace;
+        R := FMarcadorRect;
+        InflateRect(R, 1, 0);
+        TempCanvas.FillRect(R);
+
+        // Desenhar texto do marcador
+        TempCanvas.Font.Assign(Font);
+        TempCanvas.Font.Color := clWindowText;
+        TempCanvas.Brush.Style := bsClear;
+        TempCanvas.TextOut(FMarcadorRect.Left + 2, FMarcadorRect.Top, MarcadorTexto);
+
+        // Desenhar borda
+        TempCanvas.Pen.Color := clBtnShadow;
+        TempCanvas.Pen.Style := psSolid;
+        TempCanvas.Rectangle(R);
+
+        TempCanvas.Handle := 0;
+      finally
+        TempCanvas.Free;
+      end;
+    finally
+      ReleaseDC(Handle, DC);
+    end;
+  end;
+end;
+
+procedure TNortusEditAliquota.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  if (Button = mbLeft) and PontoEstaNaMarcador(X, Y) then
+  begin
+    AlternarMarcador;
+    Exit;
+  end;
+
+  inherited MouseDown(Button, Shift, X, Y);
+end;
+
+procedure TNortusEditAliquota.KeyDown(var Key: Word; Shift: TShiftState);
+begin
+  if FPermiteAlternarMarcador and (Shift = []) then
+  begin
+    if (Key = VK_UP) or (Key = VK_DOWN) then
+    begin
+      AlternarMarcador;
+      Key := 0;
+      Exit;
+    end;
+  end;
+
+  inherited KeyDown(Key, Shift);
+end;
+
+procedure TNortusEditAliquota.Resize;
+begin
+  inherited Resize;
+  CalcularMarcadorRect;
+  Invalidate;
+end;
+
+// Registro
+procedure Register;
+begin
+  RegisterComponents('Nortus', [TNortusEditAliquota]);
+end;
+
+initialization
+  Register;
+
+end.

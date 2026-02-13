@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <Units>
+      <Unit>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <UnitName Value="uNortusEditAliquota"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="7"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="10">
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="16" Column="17" TopLine="6"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="226" Column="5" TopLine="198"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Column="7"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="20" Column="13" TopLine="6"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="231" Column="5" TopLine="203"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Column="7"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="6" Column="12"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="232" Column="5" TopLine="204"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Column="7"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="61" Column="15" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="unortuseditaliquota.pas"/>
+        <Caret Line="226" Column="5" TopLine="198"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

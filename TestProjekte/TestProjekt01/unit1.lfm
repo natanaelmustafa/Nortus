@@ -1,0 +1,721 @@
+object Form1: TForm1
+  Left = 400
+  Height = 800
+  Top = 150
+  Width = 789
+  Caption = 'Test the flexiswitch'
+  ClientHeight = 800
+  ClientWidth = 789
+  Color = clWhite
+  object FlexiSwitch1: TFlexiSwitch
+    Left = 32
+    Height = 26
+    Top = 24
+    Width = 60
+    LeftCaption = 'OFF'
+    RightCaption = 'ON'
+    Font.Color = clWhite
+    Font.Height = 14
+    Font.Style = [fsBold]
+    TabOrder = 0
+  end
+  object aFlexiSwitch: TFlexiSwitch
+    Left = 32
+    Height = 39
+    Top = 80
+    Width = 90
+    LeftCaption = 'Aus'
+    RightCaption = 'Ein'
+    Font.Color = clWhite
+    Font.Height = 21
+    Font.Style = [fsBold]
+    TabOrder = 1
+  end
+  object TrackBar1: TTrackBar
+    Left = 172
+    Height = 37
+    Top = 184
+    Width = 100
+    Max = 175
+    Min = 21
+    OnChange = TrackBar1Change
+    Position = 21
+    TabOrder = 2
+  end
+  object StaticText1: TStaticText
+    Left = 32
+    Height = 25
+    Top = 196
+    Width = 66
+    Caption = 'Size :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 3
+  end
+  object StaticText2: TStaticText
+    Left = 32
+    Height = 25
+    Top = 240
+    Width = 120
+    Caption = 'Roll on/off :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 4
+  end
+  object StaticText3: TStaticText
+    Left = 32
+    Height = 25
+    Top = 288
+    Width = 120
+    Caption = 'Speed : '
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 5
+  end
+  object SpinEdit1: TSpinEdit
+    Left = 172
+    Height = 27
+    Top = 286
+    Width = 100
+    MaxValue = 100
+    MinValue = 1
+    OnChange = SpinEdit1Change
+    TabOrder = 6
+    Value = 10
+  end
+  object StaticText4: TStaticText
+    Left = 320
+    Height = 25
+    Top = 196
+    Width = 120
+    Caption = 'FocusColor :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 7
+  end
+  object ColorBox1: TColorBox
+    Left = 464
+    Height = 25
+    Top = 196
+    Width = 100
+    DefaultColorColor = clRed
+    Selected = clRed
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone]
+    ItemHeight = 0
+    OnChange = ColorBox1Change
+    TabOrder = 8
+  end
+  object StaticText5: TStaticText
+    Left = 584
+    Height = 25
+    Top = 196
+    Width = 70
+    Caption = 'Blend :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 9
+  end
+  object FloatSpinEdit1: TFloatSpinEdit
+    Left = 680
+    Height = 27
+    Top = 196
+    Width = 74
+    Increment = 0.1
+    MaxValue = 1
+    OnChange = FloatSpinEdit1Change
+    TabOrder = 10
+    Value = 0.1
+  end
+  object StaticText6: TStaticText
+    Left = 320
+    Height = 25
+    Top = 240
+    Width = 120
+    Caption = 'HoverColor :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 11
+  end
+  object ColorBox2: TColorBox
+    Left = 464
+    Height = 25
+    Top = 240
+    Width = 100
+    DefaultColorColor = clNone
+    Selected = clNone
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone]
+    ItemHeight = 0
+    OnChange = ColorBox2Change
+    TabOrder = 12
+  end
+  object StaticText7: TStaticText
+    Left = 584
+    Height = 25
+    Top = 240
+    Width = 70
+    Caption = 'Blend :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 13
+  end
+  object FloatSpinEdit2: TFloatSpinEdit
+    Left = 680
+    Height = 27
+    Top = 238
+    Width = 74
+    Increment = 0.1
+    MaxValue = 1
+    OnChange = FloatSpinEdit2Change
+    TabOrder = 14
+    Value = 0.2
+  end
+  object StaticText8: TStaticText
+    Left = 320
+    Height = 25
+    Top = 288
+    Width = 128
+    Caption = 'ButtonColor :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 15
+  end
+  object ColorBox3: TColorBox
+    Left = 464
+    Height = 25
+    Top = 288
+    Width = 100
+    DefaultColorColor = clNone
+    Selected = clNone
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone]
+    ItemHeight = 0
+    OnChange = ColorBox3Change
+    TabOrder = 16
+  end
+  object StaticText9: TStaticText
+    Left = 584
+    Height = 18
+    Top = 288
+    Width = 156
+    AutoSize = True
+    Caption = '<> clNone kein RollImage'
+    TabOrder = 17
+  end
+  object StaticText10: TStaticText
+    Left = 32
+    Height = 25
+    Top = 424
+    Width = 128
+    Caption = 'Left BkColor :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 18
+  end
+  object ColorBox4: TColorBox
+    Left = 172
+    Height = 25
+    Top = 424
+    Width = 100
+    DefaultColorColor = clRed
+    Selected = clRed
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone]
+    ItemHeight = 0
+    OnChange = ColorBox4Change
+    TabOrder = 19
+  end
+  object StaticText11: TStaticText
+    Left = 320
+    Height = 25
+    Top = 424
+    Width = 144
+    Caption = 'Right BkColor :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 20
+  end
+  object ColorBox5: TColorBox
+    Left = 464
+    Height = 25
+    Top = 424
+    Width = 100
+    Selected = clGreen
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone]
+    Color = clWhite
+    ItemHeight = 0
+    OnChange = ColorBox5Change
+    TabOrder = 21
+  end
+  object StaticText12: TStaticText
+    Left = 32
+    Height = 25
+    Top = 472
+    Width = 128
+    Caption = 'Left Caption :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 22
+  end
+  object Edit1: TEdit
+    Left = 172
+    Height = 27
+    Top = 470
+    Width = 100
+    OnChange = Edit1Change
+    TabOrder = 23
+    Text = 'Aus'
+  end
+  object StaticText13: TStaticText
+    Left = 320
+    Height = 25
+    Top = 472
+    Width = 144
+    Caption = 'Right Caption :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 24
+  end
+  object Edit2: TEdit
+    Left = 464
+    Height = 27
+    Top = 470
+    Width = 100
+    OnChange = Edit2Change
+    TabOrder = 25
+    Text = 'Ein'
+  end
+  object StaticText14: TStaticText
+    Left = 32
+    Height = 25
+    Top = 568
+    Width = 128
+    Caption = 'Left ImgIdx:'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 26
+  end
+  object SpinEdit2: TSpinEdit
+    Left = 172
+    Height = 27
+    Top = 568
+    Width = 100
+    MaxValue = 8
+    OnChange = SpinEdit2Change
+    TabOrder = 27
+  end
+  object StaticText15: TStaticText
+    Left = 320
+    Height = 25
+    Top = 568
+    Width = 128
+    Caption = 'Right ImgIdx:'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 28
+  end
+  object SpinEdit3: TSpinEdit
+    Left = 464
+    Height = 27
+    Top = 568
+    Width = 98
+    MaxValue = 8
+    OnChange = SpinEdit3Change
+    TabOrder = 29
+    Value = 1
+  end
+  object RadioButton1: TRadioButton
+    Left = 32
+    Height = 27
+    Top = 384
+    Width = 151
+    Caption = 'Direction Left'
+    Checked = True
+    Font.Height = 20
+    OnChange = RadioButton1Change
+    ParentFont = False
+    TabOrder = 30
+    TabStop = True
+  end
+  object RadioButton2: TRadioButton
+    Left = 320
+    Height = 27
+    Top = 384
+    Width = 163
+    Caption = 'Direction Right'
+    Font.Height = 20
+    OnChange = RadioButton1Change
+    ParentFont = False
+    TabOrder = 31
+  end
+  object StaticText16: TStaticText
+    Left = 32
+    Height = 25
+    Top = 336
+    Width = 136
+    Caption = 'BorderColor :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 32
+  end
+  object ColorBox6: TColorBox
+    Left = 172
+    Height = 25
+    Top = 336
+    Width = 100
+    Selected = clNone
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone]
+    ItemHeight = 0
+    OnChange = ColorBox6Change
+    TabOrder = 33
+  end
+  object StaticText17: TStaticText
+    Left = 320
+    Height = 25
+    Top = 336
+    Width = 128
+    Caption = 'Enabled :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 34
+  end
+  object StaticText18: TStaticText
+    Left = 584
+    Height = 25
+    Top = 334
+    Width = 70
+    Caption = 'Blend :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 35
+  end
+  object FloatSpinEdit3: TFloatSpinEdit
+    Left = 680
+    Height = 27
+    Top = 334
+    Width = 74
+    Increment = 0.1
+    MaxValue = 1
+    OnChange = FloatSpinEdit3Change
+    TabOrder = 36
+    Value = 0.7
+  end
+  object StaticText19: TStaticText
+    Left = 584
+    Height = 14
+    Top = 568
+    Width = 185
+    AutoSize = True
+    Caption = 'ButtonColor<> clNone kein RollImage'
+    Font.Height = -9
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 37
+  end
+  object Button1: TButton
+    Left = 32
+    Height = 25
+    Top = 616
+    Width = 240
+    Caption = 'Load images from file'
+    OnClick = Button1Click
+    TabOrder = 38
+  end
+  object StaticText20: TStaticText
+    Left = 320
+    Height = 25
+    Top = 616
+    Width = 144
+    Caption = 'ImgSizeFactor:'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 39
+  end
+  object FloatSpinEdit4: TFloatSpinEdit
+    Left = 464
+    Height = 27
+    Top = 616
+    Width = 98
+    Increment = 0.1
+    MaxValue = 1
+    OnChange = FloatSpinEdit4Change
+    TabOrder = 40
+    Value = 0.7
+  end
+  object StaticText21: TStaticText
+    Left = 32
+    Height = 25
+    Top = 520
+    Width = 128
+    Caption = 'Font Color :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 41
+  end
+  object ColorBox7: TColorBox
+    Left = 172
+    Height = 25
+    Top = 520
+    Width = 100
+    DefaultColorColor = clRed
+    Selected = clWhite
+    Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone]
+    ItemHeight = 0
+    OnChange = ColorBox7Change
+    TabOrder = 42
+  end
+  object StaticText22: TStaticText
+    Left = 320
+    Height = 25
+    Top = 520
+    Width = 144
+    Caption = 'Font Height :'
+    Font.Height = -19
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 43
+  end
+  object SpinEdit4: TSpinEdit
+    Left = 464
+    Height = 27
+    Top = 520
+    Width = 98
+    MaxValue = 50
+    MinValue = 4
+    OnChange = SpinEdit4Change
+    TabOrder = 44
+    Value = 12
+  end
+  object StaticText23: TStaticText
+    Left = 584
+    Height = 19
+    Top = 528
+    Width = 178
+    AutoSize = True
+    Caption = 'only without BestTextHight'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 45
+  end
+  object SwitchMode: TComboBox
+    Left = 584
+    Height = 27
+    Top = 384
+    Width = 170
+    ItemHeight = 0
+    Items.Strings = (
+      'fsClick'
+      'fsSlide'
+    )
+    OnChange = SwitchModeChange
+    TabOrder = 46
+    Text = 'SwitchMode'
+  end
+  object FlexiSwitch2: TFlexiSwitch
+    Left = 128
+    Height = 26
+    Top = 24
+    Width = 60
+    Direction = fsRight
+    LeftCaption = 'Aus'
+    RightCaption = 'Ein'
+    Font.Color = clWhite
+    Font.Height = 14
+    Font.Style = [fsBold]
+    TabOrder = 47
+  end
+  object FlexiSwitch3: TFlexiSwitch
+    Left = 224
+    Height = 26
+    Top = 24
+    Width = 60
+    LeftBgrdColor = clMoneyGreen
+    RightBgrdColor = clSkyBlue
+    ButtonColor = clGreen
+    HoverColor = clSilver
+    LeftCaption = 'Ja'
+    RightCaption = 'Nein'
+    Font.Color = clPurple
+    Font.Height = 14
+    Font.Style = [fsBold]
+    TabOrder = 48
+  end
+  object FlexiSwitch4: TFlexiSwitch
+    Left = 320
+    Height = 26
+    Top = 24
+    Width = 60
+    LeftBgrdColor = clWhite
+    RightBgrdColor = clWhite
+    BorderColor = clBlack
+    FocusColor = clNone
+    LeftCaption = 'OFF'
+    RightCaption = 'ON'
+    Font.Color = clSkyBlue
+    Font.Height = 13
+    Font.Style = [fsBold]
+    LeftImageIndex = 6
+    RightImageIndex = 6
+    TabOrder = 49
+  end
+  object FlexiSwitch5: TFlexiSwitch
+    Left = 408
+    Height = 26
+    Top = 24
+    Width = 60
+    LeftBgrdColor = clPurple
+    RightBgrdColor = clTeal
+    Direction = fsRight
+    Speed = 25
+    LeftCaption = 'OFF'
+    RightCaption = 'ON'
+    Font.Color = clWhite
+    Font.Height = 14
+    Font.Style = [fsBold]
+    LeftImageIndex = 5
+    RightImageIndex = 4
+    TabOrder = 50
+  end
+  object FlexiSwitch6: TFlexiSwitch
+    Left = 502
+    Height = 26
+    Top = 24
+    Width = 60
+    LeftBgrdColor = clOlive
+    RightBgrdColor = clNavy
+    Direction = fsRight
+    LeftCaption = 'O'
+    RightCaption = 'I'
+    Font.Color = clRed
+    Font.Height = 20
+    Font.Style = [fsBold]
+    BestTextHeight = False
+    LeftImageIndex = 3
+    RightImageIndex = 2
+    SwitchMode = fsSlide
+    TabOrder = 51
+  end
+  object FlexiSwitch7: TFlexiSwitch
+    Left = 600
+    Height = 26
+    Top = 24
+    Width = 60
+    LeftBgrdColor = 10545915
+    RightBgrdColor = 10545915
+    ButtonColor = clSkyBlue
+    BorderColor = clNavy
+    LeftCaption = 'Inactive'
+    RightCaption = 'Active'
+    Font.Color = clNavy
+    Font.Height = 8
+    Font.Style = [fsBold]
+    BestTextHeight = False
+    TabOrder = 52
+  end
+  object FlexiSwitch8: TFlexiSwitch
+    Left = 694
+    Height = 26
+    Top = 24
+    Width = 60
+    LeftBgrdColor = clWhite
+    RightBgrdColor = clWhite
+    ButtonColor = clBlack
+    BorderColor = clBlack
+    HoverColor = clCream
+    FocusColor = clNone
+    Direction = fsRight
+    LeftCaption = ' '
+    RightCaption = ' '
+    Font.Color = clWhite
+    Font.Height = 13
+    Font.Style = [fsBold]
+    TabOrder = 53
+  end
+  object Memo1: TMemo
+    Left = 32
+    Height = 114
+    Top = 662
+    Width = 730
+    Lines.Strings = (
+      'Zur Designzeit lassen sich Images mittel PropertyEditor auswählen. Dafür einfach im OI auf NewRollImage klicken.'
+      'Die von mir verwendeten Images sind von Roland Hahn (aka "ally"). VIELEN DANK!!!!'
+      'Siehe: https://www.lazarusforum.de/viewtopic.php?f=1&t=14263&p=128092&hilit=images+hahn#p128092.'
+      ''
+      'Falls jemand, der mehr Ahnung von Inkscape besitzt als ich, noch Images hinzufügen möchte, es sind noch genug Plätze im Editor frei.'
+    )
+    TabOrder = 54
+  end
+  object FlexiSwitch9: TFlexiSwitch
+    Left = 172
+    Height = 26
+    Top = 238
+    Width = 60
+    Direction = fsRight
+    LeftCaption = 'OFF'
+    RightCaption = 'ON'
+    Font.Color = clWhite
+    Font.Height = 14
+    Font.Style = [fsBold]
+    TabOrder = 55
+    OnDirection = FlexiSwitch9Direction
+  end
+  object FlexiSwitch10: TFlexiSwitch
+    Left = 694
+    Height = 26
+    Top = 472
+    Width = 60
+    Direction = fsRight
+    LeftCaption = 'OFF'
+    RightCaption = 'ON'
+    Font.Color = clWhite
+    Font.Height = 14
+    Font.Style = [fsBold]
+    TabOrder = 56
+    OnRight = FlexiSwitch10Right
+    OnLeft = FlexiSwitch10Left
+  end
+  object StaticText24: TStaticText
+    Left = 584
+    Height = 17
+    Top = 477
+    Width = 100
+    AutoSize = True
+    Caption = 'BestTextHeight :'
+    Font.Height = 12
+    Font.Name = 'Sans'
+    ParentFont = False
+    TabOrder = 57
+  end
+  object FlexiSwitch11: TFlexiSwitch
+    Left = 464
+    Height = 26
+    Top = 336
+    Width = 60
+    Direction = fsRight
+    LeftCaption = 'Not'
+    RightCaption = 'Enabled'
+    Font.Color = clWhite
+    Font.Height = 8
+    Font.Style = [fsBold]
+    BestTextHeight = False
+    TabOrder = 58
+    OnChange = FlexiSwitch11Change
+  end
+end
