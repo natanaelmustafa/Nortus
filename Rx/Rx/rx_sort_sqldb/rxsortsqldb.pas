@@ -1,0 +1,34 @@
+unit RxSortSqlDB;
+
+{$I rx.inc}
+
+interface
+
+uses
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs;
+
+type
+  TRxSortSqlDB = class(TComponent)
+  private
+    { Private declarations }
+  protected
+    { Protected declarations }
+  public
+    { Public declarations }
+  published
+    { Published declarations }
+  end;
+
+procedure Register;
+
+implementation
+uses exsortsql;
+
+{$R RxSortSqlDB.res}
+
+procedure Register;
+begin
+  RegisterComponents('RX DBAware',[TRxSortSqlDB]);
+end;
+
+end.
